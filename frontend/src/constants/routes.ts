@@ -1,0 +1,32 @@
+export const ROUTES = {
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  FORGOT_PASSWORD: '/forgot-password',
+  DASHBOARD: '/dashboard',
+  CONTACTS: '/contacts',
+  JOURNEYS_CREATE: '/journeys/create',
+  JOURNEY: (id: string) => `/journeys/${id}`,
+  SOS: '/sos',
+  HISTORY: '/history',
+  LAST_LOCATION: '/last-location',
+  PROFILE: '/profile',
+  MEDICAL: '/profile/medical',
+  SOS_SETTINGS: '/profile/sos-settings',
+  SETTINGS: '/settings',
+  NOTIFICATIONS: '/notifications',
+  CHECKINS: '/checkins',
+} as const;
+
+export const PROTECTED_ROUTES = [
+  '/dashboard',
+  '/contacts',
+  '/journeys',
+  '/sos',
+  '/history',
+  '/last-location',
+  '/profile',
+  '/settings',
+  '/notifications',
+  '/checkins',
+];

@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ─── SafeTrack Design Tokens ─────────────────────────────────────────────── */
+@theme {
+  /* Fonts */
+  --font-sans: var(--font-figtree), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Blue scale */
+  --color-blue-50: #eff3ff;
+  --color-blue-100: #dce4ff;
+  --color-blue-200: #b4c6ff;
+  --color-blue-500: #3b5bff;
+  --color-blue-600: #2545e8;
+
+  /* Green (safe) */
+  --color-green-50: #e9faf0;
+  --color-green-500: #18a957;
+  --color-green-600: #0f8847;
+
+  /* Red (emergency) */
+  --color-red-50: #fdecec;
+  --color-red-500: #ef3b3b;
+  --color-red-600: #db2424;
+  --color-red-700: #b41c1c;
+
+  /* Amber (warning) */
+  --color-amber-50: #fff6e6;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+
+  /* Gray scale */
+  --color-g-50: #f6f7f9;
+  --color-g-100: #eceef2;
+  --color-g-150: #e3e6ec;
+  --color-g-200: #d7dbe3;
+  --color-g-300: #c2c8d4;
+  --color-g-400: #99a1b1;
+  --color-g-500: #6c7484;
+  --color-g-700: #3a414e;
+  --color-g-800: #2e3440;
+  --color-g-900: #262b34;
+  --color-g-950: #1c2028;
+
+  /* Semantic aliases */
+  --color-background: #ffffff;
+  --color-foreground: var(--color-g-900);
+  --color-muted: var(--color-g-500);
+  --color-border: var(--color-g-150);
+  --color-card: #ffffff;
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 4px 0 rgba(0,0,0,0.06), 0 0 0 1px var(--color-g-150);
+  --shadow-elevated: 0 4px 16px 0 rgba(0,0,0,0.10);
+
+  /* Animations */
+  --animate-dot-pulse: dotPulse 2.4s ease-in-out infinite;
+  --animate-ring: ring 2.4s infinite;
+  --animate-ring-delay: ring 2.4s 0.8s infinite;
+
+  /* Keyframes */
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.4); opacity: 0; }
+  }
+
+  @keyframes ring {
+    0% { transform: scale(1); opacity: 0.35; }
+    100% { transform: scale(1.15); opacity: 0; }
+  }
+}
+
+/* ─── Default (light) runtime tokens ──────────────────────────────────────── */
+/* Must come BEFORE [data-theme] blocks so theme overrides win (equal specificity → last wins) */
+:root {
+  --color-input-bg: var(--color-g-100);
+  --color-input-text: var(--color-g-900);
+  --grid-line-color: rgba(0, 0, 0, 0.13);
+}
+
+/* ─── Dark mode tokens ─────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--color-g-950);
+    --color-foreground: var(--color-g-50);
+    --color-card: var(--color-g-900);
+    --color-border: var(--color-g-800);
+    --color-input-bg: var(--color-g-800);
+    --color-input-text: var(--color-g-50);
+    --grid-line-color: rgba(255, 255, 255, 0.07);
+  }
+}
+
+[data-theme="dark"] {
+  --color-background: var(--color-g-950);
+  --color-foreground: var(--color-g-50);
+  --color-card: var(--color-g-900);
+  --color-border: var(--color-g-800);
+  --color-input-bg: var(--color-g-800);
+  --color-input-text: var(--color-g-50);
+  --grid-line-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="light"] {
+  --color-background: #ffffff;
+  --color-foreground: var(--color-g-900);
+  --color-card: #ffffff;
+  --color-border: var(--color-g-150);
+  --color-input-bg: var(--color-g-100);
+  --color-input-text: var(--color-g-900);
+  --grid-line-color: rgba(0, 0, 0, 0.13);
+}
+
+/* ─── Base styles ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  min-height: 100svh;
+}
+
+/* ─── Grid background utility ──────────────────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Remove default focus outline, keep accessibility ring */
+*:focus-visible {
+  outline: 2px solid var(--color-blue-500);
+  outline-offset: 2px;
+}
+
+/* Mapbox overrides */
+.mapboxgl-map {
+  font-family: var(--font-sans) !important;
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  z-index: 0;
+}
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  opacity: 0.6;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(4px);
+}
+.leaflet-control-attribution a {
+  color: var(--color-blue-500);
+}
